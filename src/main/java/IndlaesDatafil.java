@@ -5,9 +5,10 @@ import java.util.List;
 public class IndlaesDatafil {
 
 	public static void main(String[] args) {
+
 		String host = "localhost";
 		String port = "3306";
-		String db = "tidsmaskinendb";
+		String db = "tidsmaskinen";
 
 		String username = "root";
 		String password = "X0aMu0";
@@ -23,9 +24,9 @@ public class IndlaesDatafil {
 				PersonOgTilmelding personOgTilmelding = personerOgTilmeldinger.get(i);
 				if (personOgTilmelding.getTilmelding() != null)
 					try {
-						String sqlPerson =
-								"INSERT INTO person(Email, For_navn, Efter_navn, Køn, Fødselsdag) VALUES (?,?,?,?,?);";
-						PreparedStatement statement1 = connection.prepareStatement(sqlPerson);
+						String personSQL =
+								"INSERT INTO person(email, for_navn, efter_navn, koen, foelselsdato) VALUES (?,?,?,?,?);";
+						PreparedStatement statement1 = connection.prepareStatement(personSQL);
 						statement1.setString(1, personOgTilmelding.getPerson().getEmail());
 						statement1.setString(2, personOgTilmelding.getPerson().getFornavn());
 						statement1.setString(3, personOgTilmelding.getPerson().getEfternavn());
@@ -33,9 +34,9 @@ public class IndlaesDatafil {
 						statement1.setDate(5, new Date(personOgTilmelding.getPerson().getFoedselsdato().getTime()));
 						statement1.executeUpdate();
 
-						String sqlTilmelding =
+						String tilmeldingSQL =
 								"INSERT INTO tilmelding(Email, klub_id, eventtype_id, eventdato) VALUES (?,?,?,?)";
-						PreparedStatement statement2 = connection.prepareStatement(sqlTilmelding);
+						PreparedStatement statement2 = connection.prepareStatement(tilmeldingSQL);
 						statement2.setString(1, personOgTilmelding.getPerson().getEmail());
 						statement2.setString(2, personOgTilmelding.getTilmelding().getForeningsId());
 						statement2.setString(3, personOgTilmelding.getTilmelding().getEventTypeId());
@@ -49,7 +50,7 @@ public class IndlaesDatafil {
 						e.printStackTrace();
 					}
 				else
-					System.out.println("\t Ingen tilhørende tilmelding");
+					System.out.println(personOgTilmelding.getPerson().getEmail() + ": Ingen tilhørende tilmelding");
 			}
 			connection.close();
 		} catch (IOException | SQLException e) {

@@ -2,7 +2,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class TidsmaskinenDB {
+public class TidsmaskinenTest {
     public static void main(String[] args) {
 
         String host = "localhost";
@@ -18,7 +18,7 @@ public class TidsmaskinenDB {
             Connection connection = DriverManager.getConnection(url, username, password);
 
 
-            String manipulation = "DELETE FROM person WHERE Email = 'maltebjoerklund@gmail.com'";
+            String manipulation = "";
 
             Statement statement = connection.createStatement();
             statement.executeUpdate(manipulation);
